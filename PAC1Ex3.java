@@ -68,7 +68,7 @@ public class PAC1Ex3 {
         //TODO
         boolean winV =false;
         int flag=0;
-        char previous = color;
+        char previous;
         do {
             for (int column = 0; column < MAX_COLUMNS; column++) {
                 flag = 0;
@@ -170,11 +170,45 @@ public class PAC1Ex3 {
 
     public static boolean checkWin(char[][] board, char color) {
         //TODO
-        
+        boolean winH;
+        boolean winV;
+        boolean winD;
+        boolean win;
+        winH=checkWinHorizontal(board, color);
+        winV=checkWinVertical(board, color);
+        winD=checkWinDiagonal(board, color);
+        if(winH||winV||winD){
+            win=true;
+        }
+        win=false;
+        return win;
     }
 
     public static char[][] dropPiece(char[][] board, int column, char color) {
         //TODO
+        char[][] boardCheck=board;
+        int row;
+        int square=0;
+        boolean validColumn = false;
+        char[] check={' ', ' ', ' ', ' ', ' '};
+
+        for (row=0; row<MAX_ROWS;row++){
+            validColumn=false;
+            check[row]=board[row][column];
+            if(check[row]==' '){
+                square=row;
+                validColumn=true;
+                row=MAX_ROWS;
+            }
+
+        }
+        if(validColumn){
+            boardCheck[square][column]=color;
+        }
+        else{
+            System.out.println("This column is invalid or full");
+        }
+        return boardCheck;
     }
 
 }
