@@ -10,14 +10,12 @@ public class PAC1Ex3 {
 
         if (column > board.length || column < 0) return validColumn;
 
-        if (column > 0 || column < MAX_COLUMNS){
-            for(int row = MAX_ROWS - 1; row >= 0; row--) {
-                if(board[row][column]==' '){
-                   validColumn=true;
-                   break;
-                }
-
+        for(int row = MAX_ROWS - 1; row >= 0; row--) {
+            if(board[row][column]==' '){
+               validColumn=true;
+               break;
             }
+
         }
 
         return validColumn;
@@ -25,13 +23,6 @@ public class PAC1Ex3 {
     }
 
     public static void printBoard(char[][] board) {
-
-       /* String result =   "| |Y|Y|R|R|Y|Y|" + System.lineSeparator() +
-                            "| |R|R|Y|Y|R|R|" + System.lineSeparator() +
-                            "| |Y|Y|R|R|Y|Y|" + System.lineSeparator() +
-                            "| |R|R|Y|Y|R|R|" + System.lineSeparator() +
-                            "| |Y|Y|R|R|Y|Y|" + System.lineSeparator() +
-                            "| |R|R|Y|Y|R|R|" + System.lineSeparator();*/
         String result = "";
         for (int row=0; row<MAX_ROWS; row++){
             result +="|";
@@ -41,10 +32,7 @@ public class PAC1Ex3 {
             result += System.lineSeparator();
         }
 
-
         System.out.print(result);
-
-
     }
 
     public static boolean checkWinHorizontal(char[][] board, char color) {
@@ -171,46 +159,32 @@ public class PAC1Ex3 {
     }
 
     public static boolean checkWin(char[][] board, char color) {
-        //TODO
-        boolean winH;
-        boolean winV;
-        boolean winD;
-        boolean win;
-        winH=checkWinHorizontal(board, color);
-        winV=checkWinVertical(board, color);
-        winD=checkWinDiagonal(board, color);
-        if(winH||winV||winD){
-            win=true;
-        }
-        win=false;
-        return win;
+        return checkWinHorizontal(board, color) ||
+                checkWinVertical(board, color) ||
+                checkWinDiagonal(board, color);
     }
 
     public static char[][] dropPiece(char[][] board, int column, char color) {
         //TODO
-        char[][] boardCheck=board;
-        int row;
-        int square=0;
-        boolean validColumn = false;
-        char[] check={' ', ' ', ' ', ' ', ' '};
+        // check con method isValidColumn
+        if (isValidColumn(board, column)) {
 
-        for (row=0; row<MAX_ROWS;row++){
-            validColumn=false;
-            check[row]=board[row][column];
-            if(check[row]==' '){
-                square=row;
-                validColumn=true;
-                row=MAX_ROWS;
+            for (int row = MAX_ROWS-1; row >=0; row--) {
+                if (board[row][column]==' '){
+                    board[row][column]=color;
+                    break;
+                }
             }
 
+            printBoard(board);
+            if (checkWin(board, color)) {
+                System.out.println("Color " + color + " wins!");
+            }
+
+        } else {
+            System.out.print("This column is invalid or full.");
         }
-        if(validColumn){
-            boardCheck[square][column]=color;
-        }
-        else{
-            System.out.println("This column is invalid or full");
-        }
-        return boardCheck;
+        return board;
     }
 
 }
