@@ -48,26 +48,24 @@ public class PAC1Ex3 {
     }
 
     public static boolean checkWinHorizontal(char[][] board, char color) {
-        //TODO
-        boolean winH=false;
-        int flag=0;
-        char previous = color;
-        do {
-            for (int row = 0; row < MAX_ROWS; row++) {
-                //flag = 0;
-                for (int column = 0; column < MAX_COLUMNS; column++) {
-                    previous=board[row][column];
-                    if (previous == color) {
-                        flag++;
-                    }
-                }
-            }
-        } while(previous==color);
-        if(flag==4){
-            winH=true;
-        }
 
-        return winH;
+        char previousColor='0';
+        int count;
+        for (int row=0; row<MAX_ROWS; row++){
+            count=0;
+            for (int column=0; column<MAX_COLUMNS; column++){
+                if (board[row][column] == color && (previousColor == color || previousColor == '0')){
+                    count++;
+                } else{
+                    count=0;
+                }
+                if (count == 4){
+                    return true;
+                }
+                previousColor=color;
+            }
+        }
+        return false;
     }
 
 
