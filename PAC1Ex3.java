@@ -70,38 +70,23 @@ public class PAC1Ex3 {
 
 
     public static boolean checkWinVertical(char[][] board, char color) {
-        //TODO
-        boolean winV =false;
-        boolean win=false;
-        int flagColor =0;
-        int row=0;
-        int column=0;
-        int count=0;
-        char previous=color;
-        do{
-            for(column=0; column<MAX_COLUMNS;column++) {
-                for (row = 0; row < MAX_ROWS; row++) {
-                    if (flagColor < 4) {
-                        if (board[row][column] == color) {
-                            if(previous==color){
-                                flagColor++;
-                                previous = board[row][column];
-
-                            }
-
-                        }
-
-                    }
-                    if (flagColor == 4) {
-                        winV = true;
-                        win = true;
-                    }
+        char previousColor='0';
+        int count;
+        for (int column=0; column<MAX_COLUMNS; column++){
+            count=0;
+            for (int row=0; row<MAX_ROWS; row++){
+                if (board[row][column] == color && (previousColor == color || previousColor == '0')){
                     count++;
+                } else{
+                    count=0;
                 }
+                if (count == 4){
+                    return true;
+                }
+                previousColor=color;
             }
-        }while(count<42);
-
-        return winV;
+        }
+        return false;
     }
 
     public static boolean checkWinDiagonal(char[][] board, char color) {
