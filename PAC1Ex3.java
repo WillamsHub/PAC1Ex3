@@ -6,8 +6,10 @@ public class PAC1Ex3 {
     public static int MAX_COLUMNS = 7;
 
     public static boolean isValidColumn(char[][] board, int column) {
-        //TODO
         boolean validColumn=false;
+
+        if (column > board.length || column < 0) return validColumn;
+
         if (column > 0 || column < MAX_COLUMNS){
             for(int row = MAX_ROWS - 1; row >= 0; row--) {
                 if(board[row][column]==' '){
@@ -23,20 +25,25 @@ public class PAC1Ex3 {
     }
 
     public static void printBoard(char[][] board) {
-        //TODO
-        char[][] matriz = {
-                {'R', 'Y', ' ', ' ', ' ', ' ', ' '},
-                {'Y', 'R', 'R', ' ', ' ', ' ', ' '},
-                {'R', 'Y', 'R', ' ', ' ', ' ', ' '},
-                {'Y', 'R', 'Y', 'R', ' ', ' ', ' '},
-                {'R', 'Y', 'Y', 'Y', ' ', ' ', ' '},
-                {'Y', 'R', 'R', 'R', 'Y', ' ', ' '}
-        };
-        for (int column = 0; column < MAX_COLUMNS; column++) {
-            for (int row = 0; row < MAX_ROWS; row++) {
-                board[row][column] = matriz[row][column];
+
+       /* String result =   "| |Y|Y|R|R|Y|Y|" + System.lineSeparator() +
+                            "| |R|R|Y|Y|R|R|" + System.lineSeparator() +
+                            "| |Y|Y|R|R|Y|Y|" + System.lineSeparator() +
+                            "| |R|R|Y|Y|R|R|" + System.lineSeparator() +
+                            "| |Y|Y|R|R|Y|Y|" + System.lineSeparator() +
+                            "| |R|R|Y|Y|R|R|" + System.lineSeparator();*/
+        String result = "";
+        for (int row=0; row<MAX_ROWS; row++){
+            result +="|";
+            for (int column=0; column<MAX_COLUMNS; column++){
+                result += board[row][column]+"|";
             }
+            result += System.lineSeparator();
         }
+
+
+        System.out.print(result);
+
 
     }
 
@@ -47,7 +54,7 @@ public class PAC1Ex3 {
         char previous = color;
         do {
             for (int row = 0; row < MAX_ROWS; row++) {
-                flag = 0;
+                //flag = 0;
                 for (int column = 0; column < MAX_COLUMNS; column++) {
                     previous=board[row][column];
                     if (previous == color) {
@@ -67,22 +74,34 @@ public class PAC1Ex3 {
     public static boolean checkWinVertical(char[][] board, char color) {
         //TODO
         boolean winV =false;
-        int flag=0;
-        char previous;
-        do {
-            for (int column = 0; column < MAX_COLUMNS; column++) {
-                flag = 0;
-                for (int row = 0; row < MAX_ROWS; row++) {
-                    previous=board[row][column];
-                    if (previous == color) {
-                        flag++;
+        boolean win=false;
+        int flagColor =0;
+        int row=0;
+        int column=0;
+        int count=0;
+        char previous=color;
+        do{
+            for(column=0; column<MAX_COLUMNS;column++) {
+                for (row = 0; row < MAX_ROWS; row++) {
+                    if (flagColor < 4) {
+                        if (board[row][column] == color) {
+                            if(previous==color){
+                                flagColor++;
+                                previous = board[row][column];
+
+                            }
+
+                        }
+
                     }
+                    if (flagColor == 4) {
+                        winV = true;
+                        win = true;
+                    }
+                    count++;
                 }
             }
-        } while(previous==color);
-        if(flag==4){
-            winV =true;
-        }
+        }while(count<42);
 
         return winV;
     }
